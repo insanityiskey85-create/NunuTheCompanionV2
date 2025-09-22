@@ -1,30 +1,83 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Dalamud.Plugin.Services;
 
-namespace NunuCompanionAppV2.Core.Persona;
+namespace NunuCompanionAppV2.Core;
 
-public static class PersonaStore
+public sealed class PersonaStore
 {
-    private static readonly JsonSerializerOptions J =
-        new() { PropertyNameCaseInsensitive = true, ReadCommentHandling = JsonCommentHandling.Skip, AllowTrailingCommas = true };
+    private readonly string _root;
+    private readonly string _relativeJson;
+    private readonly IPluginLog _log;
+    private PersonaDefinition _persona = new();
 
-    public static PersonaProfile LoadFromFile(string path, IPluginLog log)
+    public PersonaStore(string pluginRoot, string relativeJson, IPluginLog log)
+    {
+        _root = pluginRoot;
+        _relativeJson = relativeJson;
+        _log = log;
+        Reload();
+    }
+
+    public PersonaDefinition Current => _persona;
+
+    public void Reload()
     {
         try
         {
-            if (File.Exists(path))
+            var path = Path.Combine(_root, _relativeJson);
+            if (!File.Exists(path))
             {
-                var json = File.ReadAllText(path);
-                var p = JsonSerializer.Deserialize<PersonaProfile>(json, J);
-                if (p != null) return p;
+                _log.Warning($"Persona JSON not found: {path}. Using defaults.");
+                _persona = new PersonaDefinition();
+                return;
             }
-            log.Warning($"[Nunu] Persona not found or invalid at: {path}. Using defaults.");
+
+            var json = File.ReadAllText(path);
+            using var doc = JsonDocument.Parse(json);
+            _persona = MapPersona(doc);
+            _log.Info($"Loaded persona: {_persona.Name} (callsigns: {string.Join(", ", _persona.Callsigns)})");
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            log.Error(ex, "[Nunu] Failed to load Persona.json; using defaults.");
+            _log.Error(ex, "Failed to load persona; using defaults.");
+            _persona = new PersonaDefinition();
         }
-        return new PersonaProfile();
+    }
+
+    private static PersonaDefinition MapPersona(JsonDocument doc)
+    {
+        var root = doc.RootElement;
+        var p = new PersonaDefinition
+        {
+            Name = root.TryGetProperty("name", out var n) && n.ValueKind == JsonValueKind.String ? n.GetString() ?? "Nunu" : "Nunu",
+            Description = root.TryGetProperty("description", out var d) && d.ValueKind == JsonValueKind.String ? d.GetString() : null,
+            Style = root.TryGetProperty("style", out var s) && s.ValueKind == JsonValueKind.String ? s.GetString() ?? "" : "",
+            Traits = root.TryGetProperty("traits", out var t) && t.ValueKind == JsonValueKind.Object ? ToDict(t) : null,
+            Callsigns = root.TryGetProperty("callsigns", out var cs) && cs.ValueKind == JsonValueKind.Array ? ToList(cs) : new List<string> { "nunu" },
+            Greetings = root.TryGetProperty("greetings", out var g) && g.ValueKind == JsonValueKind.Array ? ToList(g) : new List<string> { "Hello!" },
+            Farewells = root.TryGetProperty("farewells", out var f) && f.ValueKind == JsonValueKind.Array ? ToList(f) : new List<string> { "Till sea swallows all." }
+        };
+        return p;
+    }
+
+    private static List<string> ToList(JsonElement arr)
+    {
+        var list = new List<string>();
+        foreach (var e in arr.EnumerateArray())
+            if (e.ValueKind == JsonValueKind.String && !string.IsNullOrWhiteSpace(e.GetString()))
+                list.Add(e.GetString()!.Trim());
+        return list;
+    }
+
+    private static Dictionary<string, string> ToDict(JsonElement obj)
+    {
+        var d = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var prop in obj.EnumerateObject())
+            if (prop.Value.ValueKind == JsonValueKind.String)
+                d[prop.Name] = prop.Value.GetString() ?? "";
+        return d;
     }
 }

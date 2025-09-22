@@ -42,4 +42,9 @@ public sealed class ChatRouter : IDisposable
     {
         try { chat.ChatMessage -= HandleChat; } catch { }
     }
+
+    private void HandleChat(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
+    {
+        throw new NotImplementedException();
+    }
 }

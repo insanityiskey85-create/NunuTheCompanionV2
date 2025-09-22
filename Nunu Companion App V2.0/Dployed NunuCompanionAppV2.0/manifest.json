@@ -1,0 +1,15 @@
+{
+  "Author": "The Nunu",
+  "Name": "Nunu Companion App V2.0",
+  "Punchline": "Minimal chat + memory.",
+  "Description": "Nunu Companion App (V2) — chat capture, simple memory, and a small viewer.",
+  "InternalName": "NunuCompanionAppV2",
+  "AssemblyVersion": "1.0.0.0",
+  "DalamudApiLevel": 13,
+  "ApplicableVersion": "any",
+  "Tags": [
+    "utility",
+    "chat",
+    "nunu"
+  ]
+}

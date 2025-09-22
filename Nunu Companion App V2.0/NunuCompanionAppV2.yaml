@@ -1,10 +1,11 @@
 name: Nunu Companion App V2.0
 author: The Nunu
-punchline: Minimal chat + memory.
-description: |-
-  Nunu Companion App (V2) — chat capture, simple memory, persona-driven replies.
+punchline: Minimal chat + persona replies.
+description: |
+  Nunu Companion App (V2) — listens for your callsign and replies in a lore-friendly voice.
 internal_name: NunuCompanionAppV2
 dalamud_api_level: 13
 dll:
   - "NunuCompanionAppV2.dll"
+icon: "icon.png"
 tags: [utility, chat, nunu]

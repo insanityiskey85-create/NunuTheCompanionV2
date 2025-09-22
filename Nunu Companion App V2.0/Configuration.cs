@@ -1,43 +1,25 @@
-﻿using System;
+﻿using Dalamud.Configuration;
+using Dalamud.Plugin;
+using NunuCompanionAppV2.Core;
 using System.Collections.Generic;
-using Dalamud.Configuration;
+using System.Text.Json.Serialization;
 
-namespace NunuCompanionAppV2.Core;
+namespace NunuCompanionAppV2;
 
-[Serializable]
 public sealed class Configuration : IPluginConfiguration
 {
     public int Version { get; set; } = 2;
 
-    // Behavior
-    public bool AutoReplyEnabled { get; set; } = true;
+    public string PersonaPath { get; set; } = @"Persona\Persona.json";
 
-    // Callsign to trigger replies (at message start)
-    public string Callsign { get; set; } = "!nunu";
+    public bool AutoReply { get; set; } = true;
+    public string UserCallsign { get; set; } = "nunu";
 
-    // Other trigger tokens accepted anywhere
-    public List<string> ExtraTriggers { get; set; } = new() { "nunu", "nunubu", "soul weeper" };
+    public List<ChatMemoryItem> Memory { get; set; } = new();
 
-    // Which chat channels can trigger (names of XivChatType)
-    public List<string> AllowedChannels { get; set; } = new() { "Say", "TellIncoming", "Party" };
+    [JsonIgnore] private IDalamudPluginInterface? _pi;
 
-    // Anti-spam
-    public int CooldownMs { get; set; } = 3000;
-    public int MaxRepliesPerMinute { get; set; } = 12;
+    public void Initialize(IDalamudPluginInterface pi) => _pi = pi;
 
-    // Memory log for the Brain
-    public List<MemoryItem> Memories { get; set; } = new();
-
-    [NonSerialized] private Action<Configuration>? saver;
-    public void BindSaver(Action<Configuration> s) => saver = s;
-    public void Save() => saver?.Invoke(this);
-
-    [Serializable]
-    public sealed class MemoryItem
-    {
-        public int Id { get; set; }
-        public string Sender { get; set; } = "";
-        public string Text { get; set; } = "";
-        public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.Now;
-    }
+    public void Save() => _pi?.SavePluginConfig(this);
 }

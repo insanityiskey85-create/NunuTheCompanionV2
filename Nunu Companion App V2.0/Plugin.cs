@@ -1,155 +1,193 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using Dalamud.Game.Command;
+using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using NunuCompanionAppV2.Core;
-using NunuCompanionAppV2.Core.Persona;
 using NunuCompanionAppV2.UI;
+
+// alias to be explicit
+using SeString = Dalamud.Game.Text.SeStringHandling.SeString;
 
 namespace NunuCompanionAppV2;
 
-public sealed class Plugin : IDalamudPlugin, IDisposable
+public sealed class Plugin : IDalamudPlugin
 {
-    public string Name => "Nunu Companion App V2.0";
+    public string Name => "Nunu Companion App V2";
 
-    // Services
-    private readonly IDalamudPluginInterface pi;
-    private readonly IChatGui chat;
-    private readonly ICommandManager commands;
-    private readonly IPluginLog log;
+    private readonly IDalamudPluginInterface _pi;
+    private readonly IChatGui _chat;
+    private readonly ICommandManager _cmd;
+    private readonly IPluginLog _log;
+    private readonly IFramework _framework;
 
-    // Core
-    private readonly Configuration config;
-    private readonly PersonaProfile persona;
-    private readonly Brain brain;
-    private readonly ChatRouter router;
-    private readonly NunuResponder responder;
-    private readonly ChatWindow chatWindow;
+    private const string Command = "/nunu";
 
-    private const string Cmd = "/nunu";
+    private readonly Configuration _config;
+    private readonly PersonaStore _persona;
+    private readonly Brain _brain;
+    private readonly NunuResponder _responder;
+    private readonly ChatWindow _window;
 
-    // Dalamud will resolve these constructor parameters
+    private Action? _detachChatHandler;
+    private readonly Action _openConfigHandler;
+
+    // Constructor injection: Dalamud will supply these.
     public Plugin(
         IDalamudPluginInterface pluginInterface,
         IChatGui chatGui,
         ICommandManager commandManager,
-        IPluginLog pluginLog)
+        IPluginLog log,
+        IFramework framework)
     {
-        pi = pluginInterface;
-        chat = chatGui;
-        commands = commandManager;
-        log = pluginLog;
+        _pi = pluginInterface;
+        _chat = chatGui;
+        _cmd = commandManager;
+        _log = log;
+        _framework = framework;
 
-        // Config load
-        config = pi.GetPluginConfig() as Configuration ?? new Configuration();
-        config.BindSaver(c => pi.SavePluginConfig(c));
+        // Config & core
+        _config = _pi.GetPluginConfig() as Configuration ?? new Configuration();
+        _config.Initialize(_pi);
+        _config.Save();
 
-        // Persona load (keeps your Persona.json structure)
-        var baseDir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory!;
-        var personaPath = Path.Combine(baseDir.FullName, "Persona", "Persona.json");
-        persona = PersonaStore.LoadFromFile(personaPath, log);
-
-        brain = new Brain(config, log);
-
-        router = new ChatRouter(chat, log);
-        responder = new NunuResponder(chat, log, brain, config, persona);
-        responder.Hook(router);
-
-        chatWindow = new ChatWindow(responder, brain, config, persona, log);
+        var pluginDir = _pi.AssemblyLocation.Directory?.FullName ?? AppContext.BaseDirectory;
+        _persona = new PersonaStore(pluginDir, _config.PersonaPath, _log);
+        _brain = new Brain(_config, _persona, _log);
+        _responder = new NunuResponder(_chat, _brain, _persona, _config, _log);
 
         // UI
-        pi.UiBuilder.Draw += chatWindow.Draw;
-        pi.UiBuilder.OpenConfigUi += () => chatWindow.Toggle();
+        _window = new ChatWindow(_brain, _persona, _config, _log);
+        _pi.UiBuilder.Draw += _window.Draw;
+        _openConfigHandler = () => _window.IsOpen = true;
+        _pi.UiBuilder.OpenConfigUi += _openConfigHandler;
 
-        // Commands
-        commands.AddHandler(Cmd, new CommandInfo(OnCommand)
+        // Command
+        _cmd.AddHandler(Command, new CommandInfo(OnCommand)
         {
-            HelpMessage = "/nunu — toggle window; /nunu auto on|off; /nunu cs <callsign>; /nunu ask <text>"
+            HelpMessage = "Toggle window; /nunu reply on|off; /nunu callsign <word>"
         });
 
-        log.Info("[Nunu] Plugin initialized.");
+        // Chat event: bind with reflection to whatever signature Dalamud exposes
+        AttachChatHandler();
+
+        _log.Info("NunuCompanionAppV2 initialized (constructor injection; no PluginService attribute).");
     }
 
     private void OnCommand(string command, string args)
     {
-        args = args?.Trim() ?? string.Empty;
-        if (string.IsNullOrEmpty(args))
+        var trimmed = (args ?? string.Empty).Trim();
+
+        if (trimmed.StartsWith("reply ", StringComparison.OrdinalIgnoreCase))
         {
-            chatWindow.Toggle();
+            var on = trimmed.EndsWith("on", StringComparison.OrdinalIgnoreCase);
+            _config.AutoReply = on;
+            _config.Save();
+            _chat.Print($"Nunu auto-reply: {(on ? "ON" : "OFF")}");
             return;
         }
 
-        var parts = args.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
-        var verb = parts[0].ToLowerInvariant();
-        var rest = parts.Length > 1 ? parts[1] : string.Empty;
-
-        switch (verb)
+        if (trimmed.StartsWith("callsign ", StringComparison.OrdinalIgnoreCase))
         {
-            case "auto":
-                if (string.Equals(rest, "on", StringComparison.OrdinalIgnoreCase)) { config.AutoReplyEnabled = true; config.Save(); chat.Print("[Nunu] Auto-reply ON"); }
-                else if (string.Equals(rest, "off", StringComparison.OrdinalIgnoreCase)) { config.AutoReplyEnabled = false; config.Save(); chat.Print("[Nunu] Auto-reply OFF"); }
-                else chat.Print("[Nunu] Use: /nunu auto on|off");
-                break;
-
-            case "cs":
-            case "callsign":
-                if (!string.IsNullOrWhiteSpace(rest))
-                {
-                    config.Callsign = rest.Trim();
-                    config.Save();
-                    chat.Print($"[Nunu] Callsign set to: {config.Callsign}");
-                }
-                else chat.Print("[Nunu] Use: /nunu cs !nunu");
-                break;
-
-            case "ask":
-                if (!string.IsNullOrWhiteSpace(rest))
-                {
-                    var reply = responder.Ask("You", rest.Trim());
-                    chat.Print($"[Nunu] {reply}");
-                    brain.Remember("You", rest.Trim());
-                }
-                else chat.Print("[Nunu] Use: /nunu ask <question>");
-                break;
-
-            case "reload":
-                // Reload persona from file
-                var baseDir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory!;
-                var personaPath = Path.Combine(baseDir.FullName, "Persona", "Persona.json");
-                var p = PersonaStore.LoadFromFile(personaPath, log);
-                responder.UpdatePersona(p);
-                chatWindow.UpdatePersona(p);
-                chat.Print("[Nunu] Persona reloaded.");
-                break;
-
-            default:
-                chat.Print("[Nunu] Unknown: auto|cs|ask|reload");
-                break;
+            var cs = trimmed["callsign ".Length..].Trim();
+            if (!string.IsNullOrWhiteSpace(cs))
+            {
+                _config.UserCallsign = cs;
+                _config.Save();
+                _chat.Print($"Nunu callsign set to: {cs}");
+            }
+            return;
         }
+
+        _window.IsOpen = !_window.IsOpen;
     }
 
-    public void Dispose()
+    // ========= Chat binding via reflection (handles multiple signatures) =========
+
+    private void AttachChatHandler()
     {
         try
         {
-            responder.Unhook(router);
-            router.Dispose();
-        }
-        catch { /* swallow on unload */ }
+            var chatType = _chat.GetType();
+            var evt = chatType.GetEvent("ChatMessage") ?? chatType.GetEvent("OnMessage");
+            if (evt == null)
+            {
+                _log.Warning("No chat event found on IChatGui (ChatMessage/OnMessage). Chat auto-reply disabled.");
+                return;
+            }
 
-        try
-        {
-            pi.UiBuilder.Draw -= chatWindow.Draw;
-            pi.UiBuilder.OpenConfigUi -= () => chatWindow.Toggle();
-        }
-        catch { }
+            var candidates = new[]
+            {
+                GetType().GetMethod(nameof(ChatHandler_New),     BindingFlags.NonPublic | BindingFlags.Instance),
+                GetType().GetMethod(nameof(ChatHandler_NewPtr),  BindingFlags.NonPublic | BindingFlags.Instance),
+                GetType().GetMethod(nameof(ChatHandler_OldRef),  BindingFlags.NonPublic | BindingFlags.Instance),
+                GetType().GetMethod(nameof(ChatHandler_OldNoRef),BindingFlags.NonPublic | BindingFlags.Instance),
+            };
 
-        try
-        {
-            commands.RemoveHandler(Cmd);
+            foreach (var m in candidates)
+            {
+                if (m == null) continue;
+                try
+                {
+                    var del = Delegate.CreateDelegate(evt.EventHandlerType!, this, m, throwOnBindFailure: false);
+                    if (del != null)
+                    {
+                        evt.AddEventHandler(_chat, del);
+                        _detachChatHandler = () =>
+                        {
+                            try { evt.RemoveEventHandler(_chat, del); } catch { }
+                        };
+                        _log.Info($"Chat bound to handler: {m.Name} (delegate: {evt.EventHandlerType!.Name}).");
+                        return;
+                    }
+                }
+                catch
+                {
+                    // try next
+                }
+            }
+
+            _log.Warning("Failed to attach chat handler: no compatible signature matched.");
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _log.Error(ex, "Error attaching chat handler.");
+        }
+    }
+
+    // Newer Dalamud (common)
+    private void ChatHandler_New(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
+        => HandleChatCore(type, sender.TextValue, message.TextValue);
+
+    // Some builds use nint senderId
+    private void ChatHandler_NewPtr(XivChatType type, nint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
+        => HandleChatCore(type, sender.TextValue, message.TextValue);
+
+    // Older: ref SeString parameters
+    private void ChatHandler_OldRef(XivChatType type, ref SeString sender, ref SeString message, ref bool isHandled)
+        => HandleChatCore(type, sender.TextValue, message.TextValue);
+
+    // Older: non-ref SeString parameters
+    private void ChatHandler_OldNoRef(XivChatType type, SeString sender, SeString message, ref bool isHandled)
+        => HandleChatCore(type, sender.TextValue, message.TextValue);
+
+    private void HandleChatCore(XivChatType type, string sender, string text)
+    {
+        _responder.HandleIncoming(type, sender, text);
+    }
+
+    // ============================================================================
+
+    public void Dispose()
+    {
+        try { _detachChatHandler?.Invoke(); } catch { /* ignore */ }
+        _cmd.RemoveHandler(Command);
+
+        _pi.UiBuilder.Draw -= _window.Draw;
+        _pi.UiBuilder.OpenConfigUi -= _openConfigHandler;
+
+        _log.Info("NunuCompanionAppV2 disposed.");
     }
 }
