@@ -8,11 +8,11 @@
     "AssemblyVersion": "1.0.0.0",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 13,
-    "Tags": [ "utility", "chat", "nunu" ],
+    "Tags": ["utility","chat","nunu"],
     "RepoUrl": "https://github.com/insanityiskey85-create/NunuTheCompanionV2",
     "IconUrl": "https://raw.githubusercontent.com/insanityiskey85-create/NunuTheCompanionV2/main/icon.png",
     "Changelog": "Initial release.",
-    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.1.1/NunuCompanionAppV2.zip",
-    "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.1.1/NunuCompanionAppV2.zip"
+    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.1.0/NunuCompanionAppV2.zip",
+    "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.1.0/NunuCompanionAppV2.zip"
   }
 ]
