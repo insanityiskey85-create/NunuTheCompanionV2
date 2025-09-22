@@ -1,18 +1,22 @@
 [
   {
     "Author": "The Nunu",
-    "Name": "Nunu Companion App V2.0",
-    "Punchline": "Minimal chat + memory.",
-    "Description": "Nunu Companion App (V2) — chat capture, simple memory, and a small viewer.",
+    "Name": "Nunu Companion App V2",
+    "Punchline": "AI bard companion—chat, triggers, persona.",
+    "Description": "Nunu Companion (V2) — in-game AI chat with trigger/mention listening, persona file support, channel selection, and broadcast. Built for Dalamud API 13.",
     "InternalName": "NunuCompanionAppV2",
     "AssemblyVersion": "1.0.0.0",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 13,
-    "Tags": ["utility","chat","nunu"],
+    "Tags": [ "utility", "chat", "ai", "bard", "nunu" ],
     "RepoUrl": "https://github.com/insanityiskey85-create/NunuTheCompanionV2",
     "IconUrl": "https://raw.githubusercontent.com/insanityiskey85-create/NunuTheCompanionV2/main/icon.png",
-    "Changelog": "Initial release.",
-    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/FFXIVTheNunu%3C3/NunuCompanionAppV2.zip",
-    "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/FFXIVTheNunu%3C3/NunuCompanionAppV2.zip"
+    "Changelog": "First public API 13 build: chat triggers, persona file, reply channel picker, and debug gating.",
+    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip",
+    "DownloadLinkUpdate": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip",
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "TestingAssemblyVersion": null,
+    "LastUpdate": "1758538800"
   }
 ]
