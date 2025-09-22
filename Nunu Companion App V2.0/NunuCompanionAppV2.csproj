@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<!-- Match Dalamud v13 (.NET 9) -->
+		<TargetFramework>net9.0-windows7.0</TargetFramework>
+		<Platforms>x64</Platforms>
+		<PlatformTarget>x64</PlatformTarget>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+		<!-- Dalamud API level -->
+		<DalamudApiLevel>13</DalamudApiLevel>
+
+		<!-- Make outputs predictable and include content -->
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+		<!-- Quiet the Windows-only ImGui warnings in non-Windows analyzers -->
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisMode>Recommended</AnalysisMode>
+		<NoWarn>CA1416</NoWarn>
+	</PropertyGroup>
+
+	<!-- Direct references to the copies inside your dev Hooks folder -->
+	<ItemGroup>
+		<Reference Include="Dalamud">
+			<HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Dalamud.Bindings.ImGui">
+			<HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.Bindings.ImGui.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="FFXIVClientStructs">
+			<HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+
+	<!-- Ship these files with the build output -->
+	<ItemGroup>
+		<None Include="NunuCompanionAppV2.yaml" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="icon.png" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="Persona\Persona.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+</Project>

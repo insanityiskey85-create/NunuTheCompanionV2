@@ -1,0 +1,9 @@
+{
+  "sdk": {
+    "rollForward": "latestFeature",
+    "version": "9.0.305"
+  },
+  "msbuild-sdks": {
+    "Dalamud.NET.Sdk": "13.1.0"
+  }
+}
