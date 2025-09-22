@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Program Files\dotnet\sdk\9.0.305\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.TargetFrameworkInference.targets(230,5): error NETSDK1135: SupportedOSPlatformVersion 10.0.22000.0 cannot be higher than TargetPlatformVersion 7.0. [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+
+Build FAILED.
+
+C:\Program Files\dotnet\sdk\9.0.305\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.TargetFrameworkInference.targets(230,5): error NETSDK1135: SupportedOSPlatformVersion 10.0.22000.0 cannot be higher than TargetPlatformVersion 7.0. [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.35

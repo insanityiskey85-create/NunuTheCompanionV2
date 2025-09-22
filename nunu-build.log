@@ -1,0 +1,22 @@
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Configuration.cs(17,28): error CS0122: 'DalamudPluginInterface' is inaccessible due to its protection level [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Core\IAiBrain.cs(11,34): error CS0246: The type or namespace name 'Message' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Core\IAiBrain.cs(11,52): error CS0246: The type or namespace name 'PersonaData' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Core\PersonaStore.cs(33,12): error CS0246: The type or namespace name 'PersonaData' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Core\PersonaStore.cs(59,20): error CS0246: The type or namespace name 'PersonaData' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Configuration.cs(15,13): error CS0122: 'DalamudPluginInterface' is inaccessible due to its protection level [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Core\PersonaStore.cs(17,13): error CS0246: The type or namespace name 'PersonaData' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(11,35): error CS0122: 'DalamudPluginInterface' is inaccessible due to its protection level [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(11,6): error CS0246: The type or namespace name 'PluginServiceAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(11,6): error CS0246: The type or namespace name 'PluginService' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(12,6): error CS0246: The type or namespace name 'PluginServiceAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(12,6): error CS0246: The type or namespace name 'PluginService' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(13,6): error CS0246: The type or namespace name 'PluginServiceAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(13,6): error CS0246: The type or namespace name 'PluginService' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(14,6): error CS0246: The type or namespace name 'PluginServiceAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\Plugin.cs(14,6): error CS0246: The type or namespace name 'PluginService' could not be found (are you missing a using directive or an assembly reference?) [C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj]
+
+Build FAILED.
+    2 Warning(s)
+    16 Error(s)
+
+Time Elapsed 00:00:23.80
