@@ -1,5 +1,4 @@
-[
-  {
+{
     "Author": "The Nunu",
     "Name": "Nunu Companion App V2.0",
     "Punchline": "Minimal chat + memory.",
@@ -16,4 +15,5 @@
     "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip",
     "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip"
   }
+
 
