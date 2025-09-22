@@ -12,7 +12,8 @@
     "RepoUrl": "https://github.com/insanityiskey85-create/NunuTheCompanionV2",
     "IconUrl": "https://raw.githubusercontent.com/insanityiskey85-create/NunuTheCompanionV2/main/icon.png",
     "Changelog": "Initial release.",
-    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.1.0/NunuCompanionAppV2.zip",
-    "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.1.0/NunuCompanionAppV2.zip"
+  {
+    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip",
+    "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip"
   }
 ]
