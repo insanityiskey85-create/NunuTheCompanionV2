@@ -1,5 +1,6 @@
 [
   {
+     Main-v.2.0
     "Author": "The Nunu",
     "Name": "Nunu Companion App V2",
     "Punchline": "AI bard companion—chat, triggers, persona.",
@@ -8,15 +9,15 @@
     "AssemblyVersion": "1.0.0.0",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 13,
-    "Tags": [ "utility", "chat", "ai", "bard", "nunu" ],
+    "Tags": ["utility", "chat", "nunu"],
     "RepoUrl": "https://github.com/insanityiskey85-create/NunuTheCompanionV2",
     "IconUrl": "https://raw.githubusercontent.com/insanityiskey85-create/NunuTheCompanionV2/main/icon.png",
-    "Changelog": "First public API 13 build: chat triggers, persona file, reply channel picker, and debug gating.",
-    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip",
-    "DownloadLinkUpdate": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/V0.1.0/NunuCompanionAppV2.zip",
-    "IsHide": false,
+    "Changelog": "TheNunuApp: tagged release; packaging & repo manifest updated.",
+    "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.2.0/NunuCompanionAppV2.zip",
+    "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.2.0/NunuCompanionAppV2.zip"
+=== "IsHide": false,
     "IsTestingExclusive": false,
     "TestingAssemblyVersion": null,
-    "LastUpdate": "1758538800"
+    "LastUpdate": "1758538800
   }
 ]
