@@ -45,7 +45,7 @@ Example `manifest` entry:
 {
   "$schema": "https://raw.githubusercontent.com/goatcorp/DalamudPluginRepo/master/manifest.schema.json",
   "name": "NunuCompanionAppV2",
-  "author": "You",
+  "author": "Real Nunu",
   "Punchline": "AI chat companion for FFXIV.",
   "Description": "Streaming chat, personas, and privacy‑first context rules.",
   "InternalName": "NunuCompanionAppV2",
