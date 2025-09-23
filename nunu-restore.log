@@ -1,0 +1,3 @@
+  Determining projects to restore...
+C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj : warning NU1504: Duplicate 'PackageReference' items found. Remove the duplicate items or use the Update functionality to ensure a consistent restore behavior. The duplicate 'PackageReference' items are: DalamudPackager 13.1.0, DalamudPackager 13.1.0.
+  Restored C:\NunuCompanionApp V2.0\Nunu Companion App V2.0\NunuCompanionAppV2.csproj (in 3.06 sec).
