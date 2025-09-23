@@ -15,9 +15,10 @@
     "Changelog": "TheNunuApp: tagged release; packaging & repo manifest updated.",
     "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.2.0/NunuCompanionAppV2.zip",
     "DownloadLinkUpdate":  "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v0.2.0/NunuCompanionAppV2.zip"
-=== "IsHide": false,
+    "IsHide": false,
     "IsTestingExclusive": false,
     "TestingAssemblyVersion": null,
     "LastUpdate": "1758538800
   }
+
 ]
