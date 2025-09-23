@@ -1,7 +1,7 @@
 # NunuCompanionAppV2 — An AI Chat Companion for Dalamud
 
 <p align="center">
-  <img src="./assets/nunucompanion-banner.png" alt="Little FFXIV Nunu — AI Chat Companion" width="820"/>
+  <img src="."C:\Users\insan\Downloads\WOW.jpeg" alt="Little FFXIV Nunu — AI Chat Companion" width="820"/>
   <br/>
   <em>Place a wide banner at <code>assets/nunucompanion-banner.png</code> (recommended: 1640×560). Include your favorite Little Nunu art.</em>
 </p>
