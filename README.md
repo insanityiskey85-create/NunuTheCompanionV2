@@ -1,9 +1,9 @@
 # NunuCompanionAppV2 — An AI Chat Companion for Dalamud
 
 <p align="center">
-  <img src="."[C:\Users\insan\Downloads\WOW.jpeg](https://github.com/insanityiskey85-create/NunuTheCompanionV2/commit/c2a1cdba6af2be00ea542b0dd0ce929a84e0d6cc#diff-452a6264ad5b14bd220ff9842d11c67f54d440eb27f3c3e90515ec090b907b09)" alt="Little FFXIV Nunu — AI Chat Companion" width="820"/>
+  <img src="."<blockquote class="imgur-embed-pub" lang="en" data-id="53Z8bYH"><a href="https://imgur.com/53Z8bYH">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>" alt="Little FFXIV Nunu — AI Chat Companion" width="820"/>
   <br/>
-  <em>Place a wide banner at <code>[C:\Users\insan\Downloads\WOW.jpeg](https://github.com/insanityiskey85-create/NunuTheCompanionV2/commit/c2a1cdba6af2be00ea542b0dd0ce929a84e0d6cc#diff-452a6264ad5b14bd220ff9842d11c67f54d440eb27f3c3e90515ec090b907b09)</code> (recommended: 1640×560). Include your favorite Little Nunu art.</em>
+  <em>Place a wide banner at <code>[img]https://i.imgur.com/53Z8bYH.png[/img]</code> (recommended: 1640×560). Include your favorite Little Nunu art.</em>
 </p>
 
 <p align="center">
