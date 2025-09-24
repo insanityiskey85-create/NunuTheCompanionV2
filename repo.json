@@ -7,7 +7,7 @@
   ],
   "Description": "Nunu Companion App (V2) — chat capture, simple memory, and a small viewer (Dalamud v13).",
   "Punchline": "Minimal chat + memory.",
-  "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v1.0.0/NunuCompanionAppV2.zip",
+  "DownloadLinkInstall": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v1.0.0/latest.zip",
   "RepoUrl": "https://github.com/insanityiskey85-create/NunuTheCompanionV2",
   "Changelog": "Initial release.",
   "DalamudApiLevel": 13,
@@ -17,5 +17,6 @@
   "Author": "The Nunu",
   "AssemblyVersion": "1.0.0.0",
   "IconUrl": "https://raw.githubusercontent.com/insanityiskey85-create/NunuTheCompanionV2/main/icon.png",
-  "DownloadLinkUpdate": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v1.0.0/NunuCompanionAppV2.zip"
+  "DownloadLinkUpdate": "https://github.com/insanityiskey85-create/NunuTheCompanionV2/releases/download/v1.0.0/latest.zip"
+
 }
